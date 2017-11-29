@@ -331,6 +331,9 @@ CGFloat CNP_UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orie
             break;
         case CNPPopupPresentationStyleSlideInFromRight:
             origin = CGPointMake(self.maskView.bounds.size.width+self.popupView.bounds.size.width, self.maskView.center.y);
+            if (self.theme.popupStyle == CNPPopupStyleActionSheet){
+                origin = CGPointMake(self.maskView.bounds.size.width+self.popupView.bounds.size.width, (self.maskView.bounds.size.height-self.popupView.bounds.size.height)+(self.popupView.bounds.size.height/2));
+            }
             break;
         case CNPPopupPresentationStyleSlideInFromTop:
             origin = CGPointMake(self.maskView.center.x, -self.popupView.bounds.size.height);
@@ -345,7 +348,12 @@ CGFloat CNP_UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orie
 - (CGPoint)endingPoint {
     CGPoint center;
     if (self.theme.popupStyle == CNPPopupStyleActionSheet) {
-        center = CGPointMake(self.maskView.center.x, self.maskView.bounds.size.height-(self.popupView.bounds.size.height * 0.5));
+        if (self.theme.presentationStyle == CNPPopupPresentationStyleSlideInFromRight){
+            center = CGPointMake((self.maskView.bounds.size.width-self.popupView.bounds.size.width)+(self.popupView.bounds.size.width/2), (self.maskView.bounds.size.height-self.popupView.bounds.size.height)+(self.popupView.bounds.size.height/2));
+        }
+        else{
+            center = CGPointMake(self.maskView.center.x, self.maskView.bounds.size.height-(self.popupView.bounds.size.height * 0.5));
+        }
     }
     else {
         center = self.maskView.center;
@@ -370,6 +378,9 @@ CGFloat CNP_UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orie
             break;
         case CNPPopupPresentationStyleSlideInFromRight:
             dismissed = self.theme.dismissesOppositeDirection?CGPointMake(-self.popupView.bounds.size.width, self.maskView.center.y):CGPointMake(self.maskView.bounds.size.width+self.popupView.bounds.size.width, self.maskView.center.y);
+            if (self.theme.popupStyle == CNPPopupStyleActionSheet) {
+                dismissed = CGPointMake(self.maskView.bounds.size.width+self.popupView.bounds.size.width, (self.maskView.bounds.size.height-self.popupView.bounds.size.height)+(self.popupView.bounds.size.height/2));
+            }
             break;
         case CNPPopupPresentationStyleSlideInFromTop:
             dismissed = self.theme.dismissesOppositeDirection?CGPointMake(self.maskView.center.x, self.maskView.bounds.size.height + self.popupView.bounds.size.height):CGPointMake(self.maskView.center.x, -self.popupView.bounds.size.height);
