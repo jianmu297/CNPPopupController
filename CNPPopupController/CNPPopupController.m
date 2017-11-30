@@ -146,7 +146,13 @@ CGFloat CNP_UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orie
         self.theme.presentationStyle = CNPPopupPresentationStyleFadeIn;
     }
     if (self.theme.popupStyle == CNPPopupStyleActionSheet) {
-        self.theme.presentationStyle = CNPPopupPresentationStyleSlideInFromBottom;
+        
+        if (self.theme.presentationStyle == CNPPopupPresentationStyleSlideInFromRight){
+            
+        }
+        else{
+            self.theme.presentationStyle = CNPPopupPresentationStyleSlideInFromBottom;
+        }
     }
     self.blurEffectView.alpha = self.theme.blurEffectAlpha;
     self.popupView.layer.cornerRadius = self.theme.popupStyle == CNPPopupStyleCentered?self.theme.cornerRadius:0;
