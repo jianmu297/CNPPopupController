@@ -84,7 +84,7 @@ static inline UIViewAnimationOptions UIViewAnimationCurveToAnimationOptions(UIVi
 }
 
 - (instancetype)init {
-    self = [self initWithContents:@[] andContentsY：0];
+    self = [self initWithContents:@[] andContentsY:0];
     return self;
 }
 

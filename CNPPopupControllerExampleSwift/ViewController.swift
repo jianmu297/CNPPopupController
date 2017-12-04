@@ -69,7 +69,7 @@ class ViewController: UIViewController {
         textField.placeholder = "Custom view!"
         customView.addSubview(textField)
         
-        let popupController = CNPPopupController(contents:[titleLabel, lineOneLabel, imageView, lineTwoLabel, customView, button])
+        let popupController = CNPPopupController(contents:[titleLabel, lineOneLabel, imageView, lineTwoLabel, customView, button], andContentsY:0)
         popupController.theme = CNPPopupTheme.default()
         popupController.theme.popupStyle = popupStyle
         // LFL added settings for custom color and blur
