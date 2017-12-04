@@ -17,7 +17,7 @@
 @property (nonatomic, weak) id <CNPPopupControllerDelegate> _Nullable delegate;
 
 - (nonnull instancetype) init __attribute__((unavailable("You cannot initialize through init - please use initWithContents:")));
-- (nonnull instancetype)initWithContents:(nonnull NSArray<UIView *> *)contents NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithContents:(nonnull NSArray<UIView *> *)contents andContentsY:(CGFloat)contentsY NS_DESIGNATED_INITIALIZER;
 
 - (void)presentPopupControllerAnimated:(BOOL)flag;
 - (void)dismissPopupControllerAnimated:(BOOL)flag;

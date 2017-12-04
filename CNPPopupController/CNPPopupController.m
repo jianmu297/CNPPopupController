@@ -26,16 +26,20 @@ static inline UIViewAnimationOptions UIViewAnimationCurveToAnimationOptions(UIVi
 @property (nonatomic, strong) NSArray <UIView *> *views;
 @property (nonatomic) BOOL dismissAnimated;
 
+@property (nonatomic, assign) CGFloat popupViewY;
+
 @end
 
 @implementation CNPPopupController
 
 
-- (instancetype)initWithContents:(NSArray <UIView *> *)contents {
+- (instancetype)initWithContents:(nonnull NSArray<UIView *> *)contents andContentsY:(CGFloat)contentsY{
     self = [super init];
     if (self) {
         
         self.views = contents;
+        
+        self.popupViewY = contentsY;
         
         self.popupView = [[UIView alloc] initWithFrame:CGRectZero];
         self.popupView.backgroundColor = [UIColor whiteColor];
@@ -80,7 +84,7 @@ static inline UIViewAnimationOptions UIViewAnimationCurveToAnimationOptions(UIVi
 }
 
 - (instancetype)init {
-    self = [self initWithContents:@[]];
+    self = [self initWithContents:@[] andContentsY：0];
     return self;
 }
 
@@ -338,7 +342,7 @@ CGFloat CNP_UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orie
         case CNPPopupPresentationStyleSlideInFromRight:
             origin = CGPointMake(self.maskView.bounds.size.width+self.popupView.bounds.size.width, self.maskView.center.y);
             if (self.theme.popupStyle == CNPPopupStyleActionSheet){
-                origin = CGPointMake(self.maskView.bounds.size.width+self.popupView.bounds.size.width, (self.maskView.bounds.size.height-self.popupView.bounds.size.height)+(self.popupView.bounds.size.height/2));
+                origin = CGPointMake(self.maskView.bounds.size.width+self.popupView.bounds.size.width,self.popupViewY+(self.popupView.bounds.size.height/2));
             }
             break;
         case CNPPopupPresentationStyleSlideInFromTop:
@@ -355,7 +359,7 @@ CGFloat CNP_UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orie
     CGPoint center;
     if (self.theme.popupStyle == CNPPopupStyleActionSheet) {
         if (self.theme.presentationStyle == CNPPopupPresentationStyleSlideInFromRight){
-            center = CGPointMake((self.maskView.bounds.size.width-self.popupView.bounds.size.width)+(self.popupView.bounds.size.width/2), (self.maskView.bounds.size.height-self.popupView.bounds.size.height)+(self.popupView.bounds.size.height/2));
+            center = CGPointMake((self.maskView.bounds.size.width-self.popupView.bounds.size.width)+(self.popupView.bounds.size.width/2), self.popupViewY+(self.popupView.bounds.size.height/2));
         }
         else{
             center = CGPointMake(self.maskView.center.x, self.maskView.bounds.size.height-(self.popupView.bounds.size.height * 0.5));
@@ -385,7 +389,7 @@ CGFloat CNP_UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orie
         case CNPPopupPresentationStyleSlideInFromRight:
             dismissed = self.theme.dismissesOppositeDirection?CGPointMake(-self.popupView.bounds.size.width, self.maskView.center.y):CGPointMake(self.maskView.bounds.size.width+self.popupView.bounds.size.width, self.maskView.center.y);
             if (self.theme.popupStyle == CNPPopupStyleActionSheet) {
-                dismissed = CGPointMake(self.maskView.bounds.size.width+self.popupView.bounds.size.width, (self.maskView.bounds.size.height-self.popupView.bounds.size.height)+(self.popupView.bounds.size.height/2));
+                dismissed = CGPointMake(self.maskView.bounds.size.width+self.popupView.bounds.size.width, self.popupViewY+(self.popupView.bounds.size.height/2));
             }
             break;
         case CNPPopupPresentationStyleSlideInFromTop:
@@ -397,6 +401,7 @@ CGFloat CNP_UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orie
     }
     return dismissed;
 }
+
 
 - (CGFloat)popupWidth {
     CGFloat width = self.theme.maxPopupWidth;
